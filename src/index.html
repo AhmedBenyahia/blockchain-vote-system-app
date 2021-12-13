@@ -51,7 +51,19 @@
             </form>
         </div>
         <div class="col-md-12">
-
+            <div class="card" style="width: 39rem;left: 27%"  id="formAddCandidate">
+                <div class="card-header">New Candidate</div>
+                <div class="card-body">
+                    <form onSubmit="App.addCandidate(); return false;">
+                        <div class="form-group">
+                            <label for="candidateName">Name</label>
+                            <input type="test" id="candidateName" class="form-control" placeholder="Enter Candidate name">
+                        </div>
+                        <br/>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </form>
+                </div>
+            </div>
 
         </div>
     </div>

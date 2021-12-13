@@ -85,6 +85,23 @@ App = {
         }).catch(function (err) {
             console.error(err);
         });
+    },
+    addCandidate: function(){
+        // Do not allow all accounts to add new candidate except account 1 and 2
+        if(App.account===App.firstAccount.toLowerCase() || App.account===App.secondAccount.toLowerCase()){
+            var candidateName = $('#candidateName').val();
+            App.contracts.Election.deployed().then(function(instance)
+                {
+                    return instance.addCandidate(candidateName, { from: App.account });
+                }
+            ).then(function(result) {
+                // Wait for candidates to update
+                $("#content").hide();
+                $("#loader").show();
+            }).catch(function(err) {
+                console.error(err);
+            });
+        }
     }
 };
 
