@@ -86,9 +86,8 @@ App = {
             console.error(err);
         });
     },
-    addCandidate: function(){
+    addCandidate: function() {
         // Do not allow all accounts to add new candidate except account 1 and 2
-        if(App.account===App.firstAccount.toLowerCase() || App.account===App.secondAccount.toLowerCase()){
             var candidateName = $('#candidateName').val();
             App.contracts.Election.deployed().then(function(instance)
                 {
@@ -101,7 +100,6 @@ App = {
             }).catch(function(err) {
                 console.error(err);
             });
-        }
     }
 };
 
