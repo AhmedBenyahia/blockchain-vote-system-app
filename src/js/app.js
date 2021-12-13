@@ -1,4 +1,5 @@
-render: function () {
+
+render:  () => {
     var electionInstance;
     var loader = $('#loader');
     var content = $('#content');
@@ -46,7 +47,7 @@ render: function () {
     });
 }
 
-castVote: function () {
+castVote:  () => {
     var candidateId = $('#candidatesSelect').val();
     App.contracts.Election.deployed().then(function (instance) {
         return instance.vote(candidateId, {from: App.account})
@@ -58,5 +59,31 @@ castVote: function () {
     }).catch(function (err) {
         console.error(err);
     });
+}
+
+listenForEvents:  () => {
+    App.contracts.Election.deployed().then(function (instance) {
+        instance.votedEvent({}, {
+            fromBlock: 0,
+            toBlock: 'latest'
+        }).watch(function (error,
+                           event) {
+            console.log('event triggered', event)
+            // Reload when a new vote is recorded
+            App.render();
+        });
+    });
+}
+
+initContract:  () => {
+    $.getJSON('Election.json',
+        function (election) {
+            // Instantiate a new truffle contract from the artifact
+            App.contracts.Election = TruffleContract(election);
+            // Connect provider to interact with contract
+            App.contracts.Election.setProvider(App.web3Provider);
+            App.listenForEvents();
+            return App.render();
+        });
 }
 
